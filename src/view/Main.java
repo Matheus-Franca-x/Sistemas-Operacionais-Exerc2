@@ -1,11 +1,16 @@
 package view;
 
+import controller.KillController;
+
 public class Main 
 {
-	
 	public static void main(String[] args)
 	{
-		System.out.println("aaa");
+		KillController controll = new KillController();
+		
+		
+		
+		
+		System.out.println(controll.callOS());
 	}
-	
 }
