@@ -35,7 +35,7 @@ public class KillController
 		}
 		else if (OS().contains("Linux"))
 		{
-			process = "ps aux";
+			process = "ps -ef";
 		}
 		
 		readProcess(process);
@@ -54,8 +54,8 @@ public class KillController
 		}
 		else
 		{
-			pidKill = "kill";
-			nomeKill = "pkill";
+			pidKill = "kill -9";
+			nomeKill = "pkill -f";
 		}
 		int pid = 0;
 		StringBuffer buffer = new StringBuffer();
