@@ -21,9 +21,9 @@ public class KillController
 		return os + " - v. " + version + " - arch. " + arch;
 	}
 	
-	public String callOS()
+	public void callOS()
 	{
-		return OS();
+		System.out.println(OS());
 	}
 	
 	public void listaProcessos()
