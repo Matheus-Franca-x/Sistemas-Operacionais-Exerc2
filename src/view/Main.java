@@ -11,5 +11,6 @@ public class Main
 		
 		controll.listaProcessos();
 		
+		controll.killProcess("notepad.exe");
 	}
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -38,17 +39,77 @@ public class KillController
 		}
 		
 		readProcess(process);
+			
+	}
+	
+	public void killProcess(String param)
+	{
+		String pidKill;
+		String nomeKill;
 		
+		if(OS().contains("Windows"))
+		{
+			pidKill = "taskkill /pid";
+			nomeKill = "taskkill /im";
+		}
+		else
+		{
+			pidKill = "kill";
+			nomeKill = "pkill";
+		}
+		int pid = 0;
+		StringBuffer buffer = new StringBuffer();
 		
+		//NumberFormatException
+		try
+		{
+			pid = Integer.parseInt(param);
+			buffer.append(pidKill);
+			buffer.append(" ");
+			buffer.append(pid);
+		} catch(NumberFormatException e) {
+			buffer.append(nomeKill);
+			buffer.append(" ");
+			buffer.append(param);
+		}
 		
+		 callProcess(buffer.toString());
 		
 	}
 	
-	
+	private void callProcess(String process) 
+	{
+		try
+		{
+			Runtime.getRuntime().exec(process);
+		} catch(Exception e) {
+			String msgErro = e.getMessage();
+			if(msgErro.contains("740"))
+			{
+				StringBuffer buffer = new StringBuffer();
+				if(OS().contains("Windows"))
+				{
+					buffer.append("cmd /c");
+					buffer.append(" ");
+				}
+					buffer.append(process);
+				try {
+					Runtime.getRuntime().exec(buffer.toString());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+			else 
+			{
+				System.err.println(msgErro);
+			}
+		}
+	}
 	
 	private void readProcess(String process)
 	{
-		try {
+		try 
+		{
 			Process p = Runtime.getRuntime().exec(process);
 			InputStream fluxo = p.getInputStream();
 			InputStreamReader leitor = new InputStreamReader(fluxo);
@@ -63,7 +124,7 @@ public class KillController
 			leitor.close();
 			fluxo.close();
 			
-			} catch (Exception e) {
+		} catch (Exception e) {
 			String msgErro = e.getMessage();
 			System.out.println(msgErro);
 		}
